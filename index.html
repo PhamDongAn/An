@@ -43,6 +43,36 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        /* Notification Box */
+        .notification {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .progress {
+            margin-top: 15px;
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #00ff9d;
+            transition: width 0.05s;
+        }
+
         /* Toggle Switch */
         .toggle-switch {
             display: flex;
@@ -164,7 +194,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="panel-title"> REGEDIT HEADSHOT</h1>
+        <h1 class="panel-title"> KODER HEADSHOT</h1>
 
         <!-- Power Control -->
         <div class="control-card">
@@ -203,7 +233,7 @@
         <div class="control-card">
             <label>DEVELOPER : PHẠM ĐỒNG AN</label>
             <div class="toggle-switch">
-                <button class="mode-btn" onclick="setMode('FREE FIRE ')">FREE FIRE</button>
+                <button class="mode-btn" onclick="setMode('FREE FIRE')">FREE FIRE</button>
                 <button class="mode-btn" onclick="setMode('FREE FIRE MAX')">FREE FIRE MAX</button>
             </div>
             <div class="status">
@@ -213,6 +243,14 @@
 
         <!-- Zalo Admin Button -->
         <a href="https://zalo.me/0868124375" target="_blank" class="zalo-button">ZALO MUA FILE VIP FULL ĐỎ</a>
+    </div>
+
+    <!-- Notification Box -->
+    <div class="notification" id="notification">
+        <h2>Đang Cài Đặt...</h2>
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
     </div>
 
     <script>
@@ -263,6 +301,26 @@
         // Mode Selector Logic
         function setMode(mode) {
             document.getElementById('currentMode').textContent = mode;
+            startInstallation();
+        }
+
+        // Installation Progress Logic
+        function startInstallation() {
+            const notification = document.getElementById('notification');
+            const progressBar = document.getElementById('progressBar');
+            notification.style.display = 'block';
+            progressBar.style.width = '0%';
+            let progress = 0;
+
+            const interval = setInterval(() => {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    notification.innerHTML = '<h2>CÀI ĐẶT THÀNH CÔNG</h2>';
+                } else {
+                    progress++;
+                    progressBar.style.width = progress + '%';
+                }
+            }, 50); // Adjust the speed of the progress
         }
     </script>
 </body>
